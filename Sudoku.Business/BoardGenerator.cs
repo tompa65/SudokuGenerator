@@ -39,7 +39,7 @@ namespace Sudoku.Business
             SwitchNumbers();
 
             //Set visibility for the numbers
-            ShowNumbers();
+            SetVisibility();
 
             return cellCollection.Cells.OrderBy(r => r.Order).ToList();
         }
@@ -80,11 +80,12 @@ namespace Sudoku.Business
             }
         }
 
-        private void ShowNumbers()
+        private void SetVisibility()
         {
             Random rnd = new Random();
             int numberOfVisibleNumbers = rnd.Next(5, 8); // Between 5 and 7
             int numberOfNumbersSet = 0;
+            int randomNumber = 0;
 
             //Reset visibility first
             for(int i = 0; i < cellCollection.Cells.Length; i++)
@@ -94,9 +95,11 @@ namespace Sudoku.Business
 
             while(numberOfNumbersSet < numberOfVisibleNumbers)
             {
-                if(cellCollection.Cells[rnd.Next(0, 16)].IsVisible == false)
+                randomNumber = rnd.Next(0, 16);
+
+                if (cellCollection.Cells[randomNumber].IsVisible == false)
                 {
-                    cellCollection.Cells[rnd.Next(0, 16)].IsVisible = true;
+                    cellCollection.Cells[randomNumber].IsVisible = true;
                     numberOfNumbersSet++;
                 }
             }
