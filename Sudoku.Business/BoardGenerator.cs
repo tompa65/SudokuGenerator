@@ -55,27 +55,23 @@ namespace Sudoku.Business
                 secondNumber = firstNumber > 1 ? firstNumber - 1 : firstNumber + 1;
             }
 
-            foreach (Cell c in cellCollection.Cells)
-            {
-                if(c.Val == firstNumber)
-                {
-                    c.Val = 0; //set temporary to zero
-                }
-            }
+            //set temporary to zero
+            ReplaceNumbers(ref cellCollection, firstNumber, 0);
 
-            foreach (Cell c in cellCollection.Cells)
-            {
-                if (c.Val == secondNumber)
-                {
-                    c.Val = firstNumber;
-                }
-            }
+            //switch second with first number
+            ReplaceNumbers(ref cellCollection, secondNumber, firstNumber);
 
+            //switch zero with second number
+            ReplaceNumbers(ref cellCollection, 0, secondNumber);
+        }
+
+        private void ReplaceNumbers(ref CellCollection cellCollection, int compareNumber, int replaceNumber)
+        {
             foreach (Cell c in cellCollection.Cells)
             {
-                if (c.Val == 0)
+                if (c.Val == compareNumber)
                 {
-                    c.Val = secondNumber;
+                    c.Val = replaceNumber; 
                 }
             }
         }
